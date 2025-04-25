@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Board</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      margin-bottom: 10px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    input, textarea, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .job-listing {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+    .job-listing h3 {
+      margin-top: 0;
+    }
+    .admin-panel, .auth-section {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Job Board</h1>
+
+    <!-- Authentication -->
+    <div class="auth-section">
+      <h2>User Login</h2>
+      <div class="form-group">
+        <label for="user-type">Login as:</label>
+        <select id="user-type">
+          <option value="jobseeker">Job Seeker</option>
+          <option value="employer">Employer</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password">
+      </div>
+      <button>Login</button>
+    </div>
+
+    <!-- Post a Job -->
+    <div class="post-job">
+      <h2>Post a Job</h2>
+      <div class="form-group">
+        <label for="title">Job Title</label>
+        <input type="text" id="title" placeholder="Job Title">
+      </div>
+      <div class="form-group">
+        <label for="company">Company Name</label>
+        <input type="text" id="company" placeholder="Company Name">
+      </div>
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" placeholder="Location">
+      </div>
+      <div class="form-group">
+        <label for="category">Category</label>
+        <input type="text" id="category" placeholder="e.g. IT, Marketing">
+      </div>
+      <div class="form-group">
+        <label for="description">Job Description</label>
+        <textarea id="description" rows="4" placeholder="Describe the job..."></textarea>
+      </div>
+      <button>Post Job</button>
+    </div>
+
+    <!-- Job Search -->
+    <div class="search-jobs">
+      <h2>Search Jobs</h2>
+      <div class="form-group">
+        <input type="text" placeholder="Search by title, company, location...">
+      </div>
+      <div class="form-group">
+        <select>
+          <option value="">All Categories</option>
+          <option value="it">IT</option>
+          <option value="marketing">Marketing</option>
+        </select>
+      </div>
+      <button>Search</button>
+    </div>
+
+    <!-- Job Listings -->
+    <div class="job-listings">
+      <h2>Job Listings</h2>
+      <div class="job-listing">
+        <h3>Frontend Developer</h3>
+        <p><strong>Company:</strong> Tech Corp</p>
+        <p><strong>Location:</strong> New York</p>
+        <p><strong>Category:</strong> IT</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <button>Apply Now</button>
+      </div>
+      <div class="job-listing">
+        <h3>Marketing Specialist</h3>
+        <p><strong>Company:</strong> Marketify</p>
+        <p><strong>Location:</strong> San Francisco</p>
+        <p><strong>Category:</strong> Marketing</p>
+        <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.</p>
+        <button>Apply Now</button>
+      </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel">
+      <h2>Admin Panel</h2>
+      <button>Manage Jobs</button>
+      <button>Manage Users</button>
+    </div>
+  </div>
+</body>
+</html>
