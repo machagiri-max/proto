@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Platform</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .form-group, .question {
+      margin-bottom: 15px;
+    }
+    input, textarea, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .question {
+      padding: 10px;
+      background: #f1f1f1;
+      border-radius: 5px;
+    }
+    .leaderboard, .analytics {
+      margin-top: 30px;
+    }
+    .score {
+      font-size: 1.2em;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Online Quiz Platform</h1>
+
+    <!-- Login -->
+    <div class="login">
+      <h2>Login</h2>
+      <div class="form-group">
+        <input type="text" id="login-username" placeholder="Username">
+      </div>
+      <div class="form-group">
+        <input type="password" id="login-password" placeholder="Password">
+      </div>
+      <button onclick="loginUser()">Login</button>
+    </div>
+
+    <!-- Quiz Creation -->
+    <div class="quiz-creation">
+      <h2>Create Quiz</h2>
+      <div class="form-group">
+        <input type="text" id="question" placeholder="Enter question">
+      </div>
+      <div class="form-group">
+        <input type="text" id="optionA" placeholder="Option A">
+        <input type="text" id="optionB" placeholder="Option B">
+        <input type="text" id="optionC" placeholder="Option C">
+        <input type="text" id="optionD" placeholder="Option D">
+        <input type="text" id="correct" placeholder="Correct Option (A, B, C, or D)">
+      </div>
+      <button onclick="addQuestion()">Add Question</button>
+    </div>
+
+    <!-- Quiz Attempt -->
+    <div class="quiz-attempt">
+      <h2>Take Quiz</h2>
+      <div id="quiz"></div>
+      <button onclick="submitQuiz()">Submit Quiz</button>
+      <div id="score" class="score"></div>
+    </div>
+
+    <!-- Leaderboard -->
+    <div class="leaderboard">
+      <h2>Leaderboard</h2>
+      <ul id="leaderboard"></ul>
+    </div>
+
+    <!-- Analytics -->
+    <div class="analytics">
+      <h2>Quiz Analytics</h2>
+      <p id="analytics">Total Quizzes Taken: 0</p>
+    </div>
+  </div>
+
+  <script>
+    let questions = [];
+    let scores = [];
+    let totalTaken = 0;
+
+    function loginUser() {
+      alert('Login successful! (Demo)');
+    }
+
+    function addQuestion() {
+      const question = document.getElementById('question').value;
+      const optionA = document.getElementById('optionA').value;
+      const optionB = document.getElementById('optionB').value;
+      const optionC = document.getElementById('optionC').value;
+      const optionD = document.getElementById('optionD').value;
+      const correct = document.getElementById('correct').value.toUpperCase();
+
+      if (question && optionA && optionB && optionC && optionD && ['A', 'B', 'C', 'D'].includes(correct)) {
+        questions.push({ question, options: { A: optionA, B: optionB, C: optionC, D: optionD }, correct });
+        alert('Question added!');
+        document.querySelectorAll('#question, #optionA, #optionB, #optionC, #optionD, #correct').forEach(el => el.value = '');
+        renderQuiz();
+      } else {
+        alert('Please fill in all fields correctly.');
+      }
+    }
+
+    function renderQuiz() {
+      const quizDiv = document.getElementById('quiz');
+      quizDiv.innerHTML = '';
+      questions.forEach((q, index) => {
+        const questionHTML = `
+          <div class="question">
+            <p>${index + 1}. ${q.question}</p>
+            ${Object.entries(q.options).map(([key, value]) => `
+              <label><input type="radio" name="q${index}" value="${key}"> ${key}. ${value}</label><br>
+            `).join('')}
+          </div>
+        `;
+        quizDiv.innerHTML += questionHTML;
+      });
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      questions.forEach((q, i) => {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected && selected.value === q.correct) {
+          score++;
+        }
+      });
+      document.getElementById('score').textContent = `You scored ${score} out of ${questions.length}`;
+      scores.push(score);
+      totalTaken++;
+      updateLeaderboard();
+      updateAnalytics();
+    }
+
+    function updateLeaderboard() {
+      const leaderboard = document.getElementById('leaderboard');
+      leaderboard.innerHTML = '';
+      scores.sort((a, b) => b - a).slice(0, 5).forEach((score, index) => {
+        leaderboard.innerHTML += `<li>#${index + 1}: ${score} points</li>`;
+      });
+    }
+
+    function updateAnalytics() {
+      document.getElementById('analytics').textContent = `Total Quizzes Taken: ${totalTaken}`;
+    }
+  </script>
+</body>
+</html>
