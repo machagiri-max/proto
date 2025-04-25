@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Netflix Platform</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+    header {
+      padding: 20px;
+      background-color: #141414;
+      text-align: center;
+    }
+    input, button {
+      padding: 10px;
+      border-radius: 5px;
+      margin: 5px;
+      border: none;
+    }
+    .search {
+      display: flex;
+      justify-content: center;
+      margin: 20px;
+    }
+    .movies {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      padding: 20px;
+    }
+    .movie {
+      background-color: #1c1c1c;
+      border-radius: 8px;
+      padding: 10px;
+      width: 200px;
+      text-align: center;
+    }
+    .movie img {
+      width: 100%;
+      border-radius: 5px;
+    }
+    .login-section {
+      text-align: center;
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mini Netflix</h1>
+  </header>
+
+  <div class="login-section">
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="loginUser()">Login</button>
+  </div>
+
+  <div class="search">
+    <input type="text" id="search-input" placeholder="Search for movies or shows...">
+    <button onclick="searchMovies()">Search</button>
+  </div>
+
+  <div class="movies" id="movies"></div>
+
+  <script>
+    const apiKey = 'YOUR_API_KEY'; // Replace with your own OMDB API key or other
+
+    function loginUser() {
+      alert('Login successful (Demo).');
+    }
+
+    function searchMovies() {
+      const query = document.getElementById('search-input').value;
+      if (!query) {
+        alert('Please enter a search term.');
+        return;
+      }
+      fetch(`https://www.omdbapi.com/?apikey=${apiKey}&s=${query}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.Search) {
+            displayMovies(data.Search);
+          } else {
+            document.getElementById('movies').innerHTML = '<p>No results found.</p>';
+          }
+        })
+        .catch(err => console.error(err));
+    }
+
+    function displayMovies(movies) {
+      const container = document.getElementById('movies');
+      container.innerHTML = '';
+      movies.forEach(movie => {
+        const div = document.createElement('div');
+        div.className = 'movie';
+        div.innerHTML = `
+          <img src="${movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/200x300'}" alt="${movie.Title}">
+          <h4>${movie.Title}</h4>
+          <p>${movie.Year}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
